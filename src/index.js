@@ -5,14 +5,38 @@ class App {
 		this.workLength = 25; // 25分間
         this.breakLength = 5; // 5分間
         this.isTimerStopped = true; // 最初はタイマーは止まっている
-		this.onWork = true; // 最初は作業からタイマーは始まる
+    this.onWork = true; // 最初は作業からタイマーは始まる
+    
     this.timeDisplay = document.getElementById('time-display');
+
+    this.startAt = null; // カウントダウン開始時の時間
+    this.endAt = null; // カウントダウン終了時の時間
+
+    this.startTimer = this.startTimer.bind(this); 
+
     this.getElements();
     this.toggleEvents();
     this.displayTime();
-    this.displayTime();
-	}
-	
+  }
+
+  getElements() {
+    this.timeDisplay = document.getElementById('time-display');
+    this.startButton = document.getElementById('start-button');
+    this.stopButton = document.getElementById('stop-button');
+  }
+  
+  toggleEvents() {
+    this.startButton.addEventListener('click', this.startTimer);
+  }
+
+  startTimer(e = null) {
+    if (e) e.preventDefault();
+    this.startButton.disabled = true;
+    this.stopButton.disabled = false;
+    this.isTimerStopped = false;
+  }
+  
+  updateTimer() {}
 	displayTime() {
     // 残りの分数と秒数を与えるための変数
     let mins;
@@ -31,12 +55,6 @@ class App {
     }
     // 最後に分数と秒数を表示
     this.timeDisplay.innerHTML = `${minsString}:${secsString}`;
-  }
-
-  getElements() {
-    this.timeDisplay = document.getElementById('time-display');
-    this.startButton = document.getElementById('start-button');
-    this.stopButton = document.getElementById('stop-button');
   }
 }
 
