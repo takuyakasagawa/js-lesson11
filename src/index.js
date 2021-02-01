@@ -35,7 +35,7 @@ class App {
     this.stopButton.disabled = false;
     this.isTimerStopped = false;
   }
-  
+
   updateTimer() {}
 	displayTime() {
     // 残りの分数と秒数を与えるための変数
