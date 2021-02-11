@@ -1,4 +1,5 @@
 import './assets/scss/styles.scss';
+import moment from 'moment';
 
 class App {
   constructor() {
@@ -29,11 +30,17 @@ class App {
     this.startButton.addEventListener('click', this.startTimer);
   }
 
-  startTimer(e = null) {
+
+  startTimer(e = null, time = moment()) {
     if (e) e.preventDefault();
     this.startButton.disabled = true;
     this.stopButton.disabled = false;
     this.isTimerStopped = false;
+    this.startAt = time;
+    const startAtClone = moment(this.startAt);
+    this.endAt = startAtClone.add(this.workLength, 'minutes');
+    this.timerUpdater = window.setInterval(this.updateTimer, 500);
+    // タイムラグがあるので、0.5秒ごとにアップデートする。
   }
 
   updateTimer() {}
@@ -56,6 +63,7 @@ class App {
     // 最後に分数と秒数を表示
     this.timeDisplay.innerHTML = `${minsString}:${secsString}`;
   }
+  
 }
 
 // ロード時にAppクラスをインスタンス化する。
