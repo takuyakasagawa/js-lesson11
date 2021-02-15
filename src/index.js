@@ -1,6 +1,10 @@
 import './assets/scss/styles.scss';
 import moment from 'moment';
 
+const SECOND = 1000; // 1000ミリ秒
+const MINUTE = 60 * SECOND; // 1分のミリ秒数
+const DAY = 24 * 60 * MINUTE; // 1日のミリ秒数
+
 class App {
   constructor() {
 		this.workLength = 25; // 25分間
@@ -41,29 +45,31 @@ class App {
     this.endAt = startAtClone.add(this.workLength, 'minutes');
     this.timerUpdater = window.setInterval(this.updateTimer, 500);
     // タイムラグがあるので、0.5秒ごとにアップデートする。
+    this.displayTime();
   }
 
-  updateTimer() {}
-	displayTime() {
-    // 残りの分数と秒数を与えるための変数
+  updateTimer(time = moment()) {
+    this.displayTime(time);
+  }
+
+	displayTime(time = moment()) {
     let mins;
     let secs;
-    // タイマーがストップしている時は、常に作業時間の長さを表示。
     if (this.isTimerStopped) {
-      mins = this.workLength;
+      mins = this.workLength.toString();
       secs = 0;
+    } else {
+      const diff = this.endAt.diff(time); // 与えられた時間(通常現在時刻)と、終了時刻との差を取得。差はミリ秒で得られる。
+      mins = Math.floor(diff / MINUTE); // 分数を得て、少数点以下の切り捨てを行う
+      secs = Math.floor((diff % MINUTE) / 1000); // 秒数を得て、少数点以下の切り捨てを行う
     }
-    // 数値を文字に変換
     const minsString = mins.toString();
     let secsString = secs.toString();
-    // 秒数が一桁のときは0を加えて2桁表示にする。
     if (secs < 10) {
       secsString = `0${secsString}`;
     }
-    // 最後に分数と秒数を表示
     this.timeDisplay.innerHTML = `${minsString}:${secsString}`;
   }
-  
 }
 
 // ロード時にAppクラスをインスタンス化する。
