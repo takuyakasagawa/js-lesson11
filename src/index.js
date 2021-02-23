@@ -137,8 +137,26 @@ class App {
       }
       this.onWork = !this.onWork;
       this.startAt = time;
-      this.endAt = this.onWork ? moment(time).add(this.workLength, 'minutes')
-        : moment(time).add(this.breakLength, 'minutes');
+
+      // this.endAt = this.onWork ? moment(time).add(this.workLength, 'minutes')
+      //   : moment(time).add(this.breakLength, 'minutes');
+
+      if (this.onWork){
+        this.endAt = moment(time).add(this.workLength, 'minutes');
+      } else {
+        this.endAt = moment(time).add(this.breakLength, 'minutes');
+      }
+      
+      //Aの条件分岐
+      if (tempCycles < 4){
+        this.endAt = moment(time).add(this.breakLength, 'minutes');
+        tempCycles ++;
+      }
+      //Bの条件分岐
+      if (tempCycles == 4){
+        this.endAt = moment(time).add(this.longBreakLength, 'minutes');
+        this.tempCycles = 0;
+      }
     }
     this.displayTime(time);
   }
