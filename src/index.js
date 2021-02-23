@@ -146,11 +146,11 @@ class App {
       } else {
         this.endAt = moment(time).add(this.breakLength, 'minutes');
       }
-      
+
       //Aの条件分岐
-      if (tempCycles < 4){
+      if (this.tempCycles < 4){
         this.endAt = moment(time).add(this.breakLength, 'minutes');
-        tempCycles ++;
+        this.tempCycles ++;
       }
       //Bの条件分岐
       if (tempCycles == 4){
