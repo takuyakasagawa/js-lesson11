@@ -142,6 +142,10 @@ class App {
         this.endAt = moment(time).add(this.workLength, 'minutes');
       }
 
+      if (!this.onWork) {
+        this.endAt = moment(time).add(this.BreakLength, 'minutes');
+      }
+
       if (this.tempCycles == 4) {
         this.endAt = moment(time).add(this.longBreakLength, 'minutes');
         this.tempCycles = 0;
