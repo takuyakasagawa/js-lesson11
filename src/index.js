@@ -142,10 +142,6 @@ class App {
         this.endAt = moment(time).add(this.workLength, 'minutes');
       }
 
-      if (!this.onWork) {
-        this.endAt = moment(time).add(this.breakLength, 'minutes');
-      }
-
       if (this.tempCycles == 4) {
         this.endAt = moment(time).add(this.longBreakLength, 'minutes');
         this.tempCycles = 0;
@@ -153,7 +149,6 @@ class App {
         this.endAt = moment(time).add(this.breakLength, 'minutes');
         this.tempCycles ++;
       }
-
     }
     this.displayTime(time);
   }
