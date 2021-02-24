@@ -143,16 +143,15 @@ class App {
       }
 
       if (!this.onWork) {
-        this.endAt = moment(time).add(this.BreakLength, 'minutes');
-      }
-
-      if (this.tempCycles == 4) {
-        this.endAt = moment(time).add(this.longBreakLength, 'minutes');
-        this.tempCycles = 0;
-      } else {
         this.endAt = moment(time).add(this.breakLength, 'minutes');
         this.tempCycles ++;
       }
+
+      //Bの条件式
+      if (this.tempCycles == 4) {
+        this.endAt = moment(time).add(this.longBreakLength, 'minutes');
+        this.tempCycles = 0;
+      } 
     }
     this.displayTime(time);
   }
