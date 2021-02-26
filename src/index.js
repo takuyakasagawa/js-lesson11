@@ -85,6 +85,7 @@ class App {
     this.longBreakLength = 15;
     this.startAt = null;
     this.endAt = null;
+    this.pausedAt = null;
     this.isTimerStopped = true;
     this.onWork = true;
     this.tempCycles = 0;
@@ -138,6 +139,7 @@ class App {
       this.onWork = !this.onWork;
       this.startAt = time;
 
+      //Aの条件
       if (this.onWork) {
         this.endAt = moment(time).add(this.workLength, 'minutes');
       }
