@@ -114,10 +114,18 @@ class App {
     const startAtClone = moment(this.startAt);
     this.endAt = startAtClone.add(this.workLength, 'minutes');
     this.timerUpdater = window.setInterval(this.updateTimer, 500);
+    if (this.pausedAt) {
+      //var duration = moment.duration(x.diff(y));
+      const diff = moment(time).diff(this.pausedAt);
+      console.log(diff);
+    } else {
+
+    }
+    console.log(this.diff);
     // タイムラグがあるので、0.5秒ごとにアップデートする。
     this.displayTime();
   }
-
+  
   stopTimer(e = null) {
     if (e) e.preventDefault();
     this.resetValues();
@@ -207,7 +215,6 @@ class App {
     this.historyDisplay.appendChild(tableEl);
   }
 }
-
 // ロード時にAppクラスをインスタンス化する。
 window.addEventListener('load', () => new App()); 
 
