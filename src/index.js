@@ -20,6 +20,7 @@ class App {
     this.startTimer = this.startTimer.bind(this);
     this.updateTimer = this.updateTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
+    this.pausedTimer = this.pausedTimer.bind(this);
     this.resetValues = this.resetValues.bind(this);
     this.displayTime = this.displayTime.bind(this);
     this.getHistory = App.getHistory.bind(this);
@@ -98,11 +99,13 @@ class App {
     this.historyDisplay = document.getElementById('history');
     this.startButton = document.getElementById('start-button');
     this.stopButton = document.getElementById('stop-button');
+    this.pausedButton = document.getElementById('paused-button');
   }
   
   toggleEvents() {
     this.startButton.addEventListener('click', this.startTimer);
     this.stopButton.addEventListener('click', this.stopTimer);
+    this.pausedButton.addEventListener('click', this.pausedTimer);
   }
 
   startTimer(e = null, time = moment()) {
@@ -117,12 +120,15 @@ class App {
     if (this.pausedAt) {
       //var duration = moment.duration(x.diff(y));
       const diff = moment(time).diff(this.pausedAt);
-      console.log(diff);
+      console.log(this.diff);
     } else {
 
     }
-    console.log(this.diff);
     // タイムラグがあるので、0.5秒ごとにアップデートする。
+    this.displayTime();
+  }
+
+  pausedTimer() {
     this.displayTime();
   }
   
