@@ -117,10 +117,10 @@ class App {
     const startAtClone = moment(this.startAt);
     this.endAt = startAtClone.add(this.workLength, 'minutes');
     this.timerUpdater = window.setInterval(this.updateTimer, 500);
-    if (this.pausedAt) {
+    if (true) {
       //var duration = moment.duration(x.diff(y));
       const diff = moment(time).diff(this.pausedAt);
-      console.log(this.diff);
+      console.log(diff);
     } else {
 
     }
