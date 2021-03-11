@@ -112,6 +112,7 @@ class App {
     if (e) e.preventDefault();
     this.startButton.disabled = true;
     this.stopButton.disabled = false;
+    this.pausedButton.disabled = false;
     this.isTimerStopped = false;
     this.startAt = time;
     const startAtClone = moment(this.startAt);
@@ -137,6 +138,7 @@ class App {
     this.resetValues();
     this.startButton.disabled = false;
     this.stopButton.disabled = true;
+    //this.pausedButton.disabled = true;
     window.clearInterval(this.timerUpdater);
     this.timerUpdater = null;
     this.displayTime();
