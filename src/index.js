@@ -113,17 +113,15 @@ class App {
     this.startButton.disabled = true;
     this.stopButton.disabled = false;
     this.pausedButton.disabled = false;
-    this.isTimerStopped = false;
-    this.startAt = time;
-    const startAtClone = moment(this.startAt);
-    this.endAt = startAtClone.add(this.workLength, 'minutes');
     this.timerUpdater = window.setInterval(this.updateTimer, 500);
-    if (true) {
-      //var duration = moment.duration(x.diff(y));
-      const diff = moment(time).diff(this.pausedAt);
+    if (this.pausedAt) {
+      const diff = moment(time).diff(this.pausedAt);//var duration = moment.duration(x.diff(y));
       console.log(diff);
     } else {
-
+      this.isTimerStopped = false;
+      this.startAt = time;
+      const startAtClone = moment(this.startAt);
+      this.endAt = startAtClone.add(this.workLength, 'minutes');
     }
     // タイムラグがあるので、0.5秒ごとにアップデートする。
     this.displayTime();
