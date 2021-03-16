@@ -113,10 +113,10 @@ class App {
     this.startButton.disabled = true;
     this.stopButton.disabled = false;
     this.pausedButton.disabled = false;
-    this.timerUpdater = window.setInterval(this.updateTimer, 500);
     if (this.pausedAt) {
       const diff = moment(time).diff(this.pausedAt);//var duration = moment.duration(x.diff(y));
       console.log(diff);
+      this.endAt = this.endAt.add(diff, 'millisecond');
     } else {
       this.isTimerStopped = false;
       this.startAt = time;
@@ -124,10 +124,18 @@ class App {
       this.endAt = startAtClone.add(this.workLength, 'minutes');
     }
     // タイムラグがあるので、0.5秒ごとにアップデートする。
+    this.timerUpdater = window.setInterval(this.updateTimer, 500);
     this.displayTime();
   }
 
-  pausedTimer() {
+  pausedTimer(e = null, time = moment()) { //タイマー再生中にpausedボタンを押すとタイマーが一時停止する
+    if (e) e.preventDefault();
+    this.startButton.disabled = false;
+    this.stopButton.disabled = false;
+    this.pausedButton.disabled = true;
+    this.onWork = false;
+    this.pausedAt = time;
+    window.clearInterval(this.timerUpdater);
     this.displayTime();
   }
   
@@ -136,7 +144,7 @@ class App {
     this.resetValues();
     this.startButton.disabled = false;
     this.stopButton.disabled = true;
-    //this.pausedButton.disabled = true;
+    this.pausedButton.disabled = false;
     window.clearInterval(this.timerUpdater);
     this.timerUpdater = null;
     this.displayTime();
