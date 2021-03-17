@@ -128,15 +128,14 @@ class App {
     this.displayTime();
   }
 
-  pausedTimer(e = null, time = moment()) { //タイマー再生中にpausedボタンを押すとタイマーが一時停止する
+  pausedTimer(e = null, time = moment()) {
     if (e) e.preventDefault();
     this.startButton.disabled = false;
     this.stopButton.disabled = false;
     this.pausedButton.disabled = true;
-    this.onWork = false;
     this.pausedAt = time;
     window.clearInterval(this.timerUpdater);
-    this.displayTime();
+    this.timerUpdater = null;
   }
   
   stopTimer(e = null) {
@@ -144,7 +143,7 @@ class App {
     this.resetValues();
     this.startButton.disabled = false;
     this.stopButton.disabled = true;
-    this.pausedButton.disabled = false;
+    this.pausedButton.disabled = true;
     window.clearInterval(this.timerUpdater);
     this.timerUpdater = null;
     this.displayTime();
@@ -172,7 +171,7 @@ class App {
       }
 
       //Bの条件式
-      if (this.tempCycles == 4) {
+      if (this.tempCycles === 4) {
         this.endAt = moment(time).add(this.longBreakLength, 'minutes');
         this.tempCycles = 0;
       } 
