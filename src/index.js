@@ -37,11 +37,32 @@ class App {
     this.removeOldHistory();
   }
 
+  resetValues() {
+    this.workLength = 25;
+    this.breakLength = 5;
+    this.longBreakLength = 15;
+    this.startAt = null;
+    this.endAt = null;
+    this.pausedAt = null;
+    this.isTimerStopped = true;
+    this.onWork = true;
+    this.tempCycles = 0;
+  }
+
   saveIntervalData(momentItem) {
     const collection = this.getHistory(); // 既に保存されているデータの取得。
     collection.push(momentItem.valueOf()); // 新しいデータを追加する。
     // JSON形式で再度保存する。
     localStorage.setItem('intervalData', JSON.stringify(collection));
+  }
+
+  static getHistory() {
+    const items = localStorage.getItem('intervalData');
+    let collection = [];
+    // localStorageにはArrayを直接保存出来ないので、JSON形式で保存しています。
+    // 取り出す時は、JSON.parseでarrayに戻します。
+    if (items) collection = JSON.parse(items);
+    return collection;
   }
 
   removeOldHistory() {
@@ -58,15 +79,6 @@ class App {
     localStorage.setItem('intervalData', JSON.stringify(newCollection));
   }
 
-  static getHistory() {
-    const items = localStorage.getItem('intervalData');
-    let collection = [];
-    // localStorageにはArrayを直接保存出来ないので、JSON形式で保存しています。
-    // 取り出す時は、JSON.parseでarrayに戻します。
-    if (items) collection = JSON.parse(items);
-    return collection;
-  }
-
   displayCyclesToday(time = moment()) {
     const collection = this.getHistory();
     const startOfToday = time.startOf('day');
@@ -80,18 +92,6 @@ class App {
     this.percentOfTodayDisplay.innerHTML = `目標を${percent}％達成中です。`;
   }
 
-  resetValues() {
-    this.workLength = 25;
-    this.breakLength = 5;
-    this.longBreakLength = 15;
-    this.startAt = null;
-    this.endAt = null;
-    this.pausedAt = null;
-    this.isTimerStopped = true;
-    this.onWork = true;
-    this.tempCycles = 0;
-  }
-
   getElements() {
     this.timeDisplay = document.getElementById('time-display');
     this.countOfTodayDisplay = document.getElementById('count-today');
@@ -101,7 +101,7 @@ class App {
     this.stopButton = document.getElementById('stop-button');
     this.pausedButton = document.getElementById('paused-button');
   }
-  
+
   toggleEvents() {
     this.startButton.addEventListener('click', this.startTimer);
     this.stopButton.addEventListener('click', this.stopTimer);
@@ -128,16 +128,6 @@ class App {
     this.displayTime();
   }
 
-  pausedTimer(e = null, time = moment()) {
-    if (e) e.preventDefault();
-    this.startButton.disabled = false;
-    this.stopButton.disabled = false;
-    this.pausedButton.disabled = true;
-    this.pausedAt = time;
-    window.clearInterval(this.timerUpdater);
-    this.timerUpdater = null;
-  }
-  
   stopTimer(e = null) {
     if (e) e.preventDefault();
     this.resetValues();
@@ -147,6 +137,16 @@ class App {
     window.clearInterval(this.timerUpdater);
     this.timerUpdater = null;
     this.displayTime();
+  }
+
+  pausedTimer(e = null, time = moment()) {
+    if (e) e.preventDefault();
+    this.startButton.disabled = false;
+    this.stopButton.disabled = false;
+    this.pausedButton.disabled = true;
+    this.pausedAt = time;
+    window.clearInterval(this.timerUpdater);
+    this.timerUpdater = null;
   }
 
   updateTimer(time = moment()) {
