@@ -7,26 +7,17 @@ const DAY = 24 * 60 * MINUTE; // 1日のミリ秒数
 
 class App {
   constructor() {
-		this.workLength = 25; // 25分間
-        this.breakLength = 5; // 5分間
-        this.isTimerStopped = true; // 最初はタイマーは止まっている
-    this.onWork = true; // 最初は作業からタイマーは始まる
-    
-    this.timeDisplay = document.getElementById('time-display');
 
-    this.startAt = null; // カウントダウン開始時の時間
-    this.endAt = null; // カウントダウン終了時の時間
-
-    this.startTimer = this.startTimer.bind(this);
-    this.updateTimer = this.updateTimer.bind(this);
-    this.stopTimer = this.stopTimer.bind(this);
-    this.pausedTimer = this.pausedTimer.bind(this);
-    this.resetValues = this.resetValues.bind(this);
-    this.displayTime = this.displayTime.bind(this);
     this.getHistory = App.getHistory.bind(this);
     this.saveIntervalData = this.saveIntervalData.bind(this);
-    this.displayCyclesToday = this.displayCyclesToday.bind(this);
+    this.resetValues = this.resetValues.bind(this);
+    this.startTimer = this.startTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+    this.pausedTimer = this.pausedTimer.bind(this);
+    this.updateTimer = this.updateTimer.bind(this);
     this.displayHistory = this.displayHistory.bind(this);
+    this.displayCyclesToday = this.displayCyclesToday.bind(this);
+    this.displayTime = this.displayTime.bind(this);
 
     this.resetValues();
     this.getElements();
