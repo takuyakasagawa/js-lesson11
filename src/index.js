@@ -19,13 +19,13 @@ class App {
     this.displayCyclesToday = this.displayCyclesToday.bind(this);
     this.displayTime = this.displayTime.bind(this);
 
+    this.displayHistory();
+    this.removeOldHistory();
     this.resetValues();
     this.getElements();
     this.toggleEvents();
-    this.displayTime();
     this.displayCyclesToday();
-    this.displayHistory();
-    this.removeOldHistory();
+    this.displayTime();
   }
 
   resetValues() {
