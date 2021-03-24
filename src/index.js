@@ -214,9 +214,9 @@ class App {
       trElDate.appendChild(thElDate);
       trElCount.appendChild(tdElCount);
     }
-    tableEl.appendChild(trElDate);
-    tableEl.appendChild(trElCount);
-    this.historyDisplay.appendChild(tableEl);
+    // tableEl.appendChild(trElDate);
+    // tableEl.appendChild(trElCount);
+    // this.historyDisplay.appendChild(tableEl);
   }
 }
 // ロード時にAppクラスをインスタンス化する。
